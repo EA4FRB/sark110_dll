@@ -22,13 +22,14 @@ A basic C++ project for demonstrating the DLL usage is available in SARK110_DLL_
 -----------------
 Following code snippets show the SARK110_DLL invoke functions from .NET programs.
 
+```C#
 using System.Runtime.InteropServices;     // DLL support
 
 namespace xxx
 {
     class yyy
     {
-	...
+	..
 	[DllImport("SARK110_DLL.dll", CallingConvention = CallingConvention.Cdecl)]
 	public static extern int SARK110_Connect(Int16 itfz, Int16 num, String serverAddr);
 
@@ -71,3 +72,4 @@ namespace xxx
 	...
     }
 }
+```
