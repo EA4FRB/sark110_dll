@@ -28,7 +28,9 @@ API
   * @param  maxDev	maximum number of devices to detect (HID only)
   * @param  serverAddr	server address (sockets only)
   * @retval
-  *			@li >=1: 	number of devices detected
+  *			@li >=1: 	number of devices detected. 
+  * 					If > 1 (HID only), use a number between 1 and retval 
+  *					to talk to the specific device.
   *			@li -1: 	device not detected
   */
 extern int Sark_Connect (int16 itfz, int16 maxDev, char *serverAddr);
