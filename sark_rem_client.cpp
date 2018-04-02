@@ -122,7 +122,7 @@ int Sark_Close (int16 num)
 	}
 	else  /* HID */
 	{
-		rawhid_close(0);
+		rawhid_close(num);
 	}
 	return 1;
 }
@@ -225,10 +225,10 @@ int Sark_Meas_Rx (int16 num, uint32 u32Freq, bool bCal, uint8 u8Samples, float *
   *			@li -1: comm error
   *			@li -2: device answered error
   */
-int Sark_Meas_Rx_Eff (int16 num, uint32 u32Freq, uint32 u32Step, bool bCal, uint8 u8Samples, 
-	float *pfR1, float *pfX1, 
-	float *pfR2, float *pfX2, 
-	float *pfR3, float *pfX3, 
+int Sark_Meas_Rx_Eff (int16 num, uint32 u32Freq, uint32 u32Step, bool bCal, uint8 u8Samples,
+	float *pfR1, float *pfX1,
+	float *pfR2, float *pfX2,
+	float *pfR3, float *pfX3,
 	float *pfR4, float *pfX4
 	)
 {
@@ -806,9 +806,9 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 }
 
 /**
-  * @brief  
+  * @brief
   *
-  * @param  
+  * @param
   * @retval None
   */
 union Bits
