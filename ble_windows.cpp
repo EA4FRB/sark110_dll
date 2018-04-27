@@ -1,3 +1,4 @@
+#ifndef _NO_BLE_SUPPORT_
 /**
   ******************************************************************************
   * @file    ble_windows.cpp
@@ -550,4 +551,4 @@ static void CALLBACK RecvHandler( BTH_LE_GATT_EVENT_TYPE EventType, PVOID EventO
 
 /************* (C) COPYRIGHT 2011-2018 Melchor Varela - EA4FRB *****END OF FILE****/
 
-
+#endif

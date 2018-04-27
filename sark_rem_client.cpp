@@ -94,7 +94,9 @@ int Sark_Connect (int16 itfz, int16 maxDev, char *serverAddr)
 		return Sock_Connect(serverAddr);
 	else if (gi16Itfz == ITFZ_BT)
 	{
+#ifndef _NO_BLE_SUPPORT_
 		iRc = ble_open();
+#endif
 	}
 	else  /* HID */
 	{
@@ -118,7 +120,9 @@ int Sark_Close (int16 num)
 		return Sock_Close();
 	else if (gi16Itfz == ITFZ_BT)
 	{
+#ifndef _NO_BLE_SUPPORT_
 		ble_close();
+#endif
 	}
 	else  /* HID */
 	{
@@ -750,6 +754,8 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 		return Sock_SendReceive(tx, rx);
 	else if (gi16Itfz == ITFZ_BT)
 	{
+#ifndef _NO_BLE_SUPPORT_
+
 		int retryCmd;
 		int retryGbl;
 		int numRetry;
@@ -782,6 +788,7 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 			ble_open();
 		}
 		LeaveCriticalSection(&txrx_mutex);
+#endif
 	}
 	else  /* HID */
 	{
