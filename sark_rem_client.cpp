@@ -662,16 +662,17 @@ int Sark_Buzzer (int16 num, uint16 u16Freq, uint16 u16Duration)
   *
   * @param  num		device number (starting by zero)
   * @param  u8Cmd	{GPIO_MODE, GPIO_WRITE, GPIO_READ}
-  * @param  pu8Val  
+  * @param  u8In  
   *					GPIO_MODE: {GPIO_MODE_IPU, GPIO_MODE_IPD, GPIO_MODE_IN_FLOAT, GPIO_MODE_OUT_PP}
   *					GPIO_WRITE: in  {0, 1}
+  * @param  pu8Out  
   *					GPIO_READ:  out {0, 1}
   * @retval None
   *			@li 1: Ok
   *			@li -1: comm error
   *			@li -2: device answered error
   */
-int Sark_GPIO (int16 num, uint8 u8Cmd, uint8 u8Port, uint8 *pu8Val)
+int Sark_GPIO (int16 num, uint8 u8Cmd, uint8 u8Port, uint8 u8In, uint8 *pu8Out)
 {
 	uint8 tu8Rx[SARKCMD_RX_SIZE];
 	uint8 tu8Tx[SARKCMD_TX_SIZE];
@@ -681,7 +682,7 @@ int Sark_GPIO (int16 num, uint8 u8Cmd, uint8 u8Port, uint8 *pu8Val)
 	tu8Tx[0] = CMD_GPIO;
 	tu8Tx[1] = u8Cmd;
 	tu8Tx[2] = u8Port;
-	tu8Tx[3] = *pu8Val;
+	tu8Tx[3] = u8In;
 
 	rc = SendReceive (num, tu8Tx, tu8Rx);
 	if (rc < 0)
@@ -692,7 +693,7 @@ int Sark_GPIO (int16 num, uint8 u8Cmd, uint8 u8Port, uint8 *pu8Val)
 	{
 		return -2;
 	}
-	*pu8Val = tu8Rx[1];
+	*pu8Out = tu8Rx[1];
 	return 1;
 }
 

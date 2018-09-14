@@ -74,7 +74,7 @@ extern int SARK110_DiskInfo(int16 num, uint32 *pu32Tot, uint32 *pu32Fre);
 extern int SARK110_DiskVolume(int16 num, uint8 *pu8Volume);
 extern int SARK110_Buzzer(int16 num, uint16 u16Freq, uint16 u16Duration);
 extern int SARK110_Device_Reset (int16 num);
-extern int SARK110_GPIO(int16 num, uint8 u8Cmd, uint8 u8Port, uint8 *pu8Val);
+extern int SARK110_GPIO(int16 num, uint8 u8Cmd, uint8 u8Port, uint8 u8In, uint8 *pu8Out);
 
 #endif	 /* __SARK110_DLL_H__ */
 
