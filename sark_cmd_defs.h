@@ -53,6 +53,7 @@
 #define CMD_BUZZER				20	/* Sounds buzzer */
 #define CMD_GET_KEY				21	/* Get key */
 #define CMD_DEV_RST				50	/* Reset */
+#define CMD_GPIO				60	/* GPIO command */
 
 /* Position 0 in responses */
 #define ANS_SARK_OK				'O'
@@ -61,6 +62,16 @@
 /* Position 5 in CMD_SARK_MEAS_RX */
 #define PAR_SARK_CAL			1	/* OSL calibrated val */
 #define PAR_SARK_UNCAL			2	/* Raw val */
+
+/* GPIO Command */
+#define GPIO_MODE				0
+#define GPIO_WRITE				1
+#define GPIO_READ				2
+
+#define GPIO_MODE_IPU			0
+#define GPIO_MODE_IPD			1
+#define GPIO_MODE_IN_FLOAT		2
+#define GPIO_MODE_OUT_PP		3
 
 #define SARKCMD_TX_SIZE			18	/* transmit command size */
 #define SARKCMD_RX_SIZE			18	/* receive command size  */
