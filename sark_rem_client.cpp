@@ -662,6 +662,7 @@ int Sark_Buzzer (int16 num, uint16 u16Freq, uint16 u16Duration)
   *
   * @param  num		device number (starting by zero)
   * @param  u8Cmd	{GPIO_MODE, GPIO_WRITE, GPIO_READ}
+  * @param  u8Port  port number
   * @param  u8In  
   *					GPIO_MODE: {GPIO_MODE_IPU, GPIO_MODE_IPD, GPIO_MODE_IN_FLOAT, GPIO_MODE_OUT_PP}
   *					GPIO_WRITE: in  {0, 1}
