@@ -91,9 +91,19 @@ __declspec(dllexport) int SARK110_Meas_RF(int16 num, uint32 u32Freq, float *pfMa
 	return Sark_Meas_RF (num, u32Freq, pfMagV, pfPhV, pfMagI, pfPhI);
 }
 
-__declspec(dllexport) int SARK110_GPIO(int16 num, uint8 u8Cmd, uint8 u8Port, uint8 *pu8Val)
+__declspec(dllexport) int SARK110_GPIO(int16 num, uint8 u8Cmd, uint8 u8Port, uint8 u8In, uint8 *pu8Out)
 {
-	return Sark_GPIO (num, u8Cmd, u8Port, pu8Val);
+	return Sark_GPIO (num, u8Cmd, u8Port, u8In, pu8Out);
+}
+
+__declspec(dllexport) int SARK110_SetSetting(int16 num, uint8 u8Reg, uint8 u8Val)
+{
+	return Sark_SetSetting (num, u8Reg, u8Val);
+}
+
+__declspec(dllexport) int SARK110_GetSetting(int16 num, uint8 u8Reg, uint8 *pu8Val)
+{
+	return Sark_GetSetting (num, u8Reg, pu8Val);
 }
 
 }

@@ -698,6 +698,74 @@ int Sark_GPIO (int16 num, uint8 u8Cmd, uint8 u8Port, uint8 u8In, uint8 *pu8Out)
 }
 
 /**
+  * @brief Change setting
+  *
+  * @param  num		device number (starting by zero)
+  * @param  u8Reg	{SETTING_SAMPLING, SETTING_FILTER, SETTING_RUN}
+  * @param  u8Val	value to configure
+  * @retval None
+  *			@li 1: Ok
+  *			@li -1: comm error
+  *			@li -2: device answered error
+  */
+int Sark_SetSetting (int16 num, uint8 u8Reg, uint8 u8Val)
+{
+	uint8 tu8Rx[SARKCMD_RX_SIZE];
+	uint8 tu8Tx[SARKCMD_TX_SIZE];
+	int rc;
+
+	memset(tu8Tx, 0, SARKCMD_TX_SIZE);
+	tu8Tx[0] = CMD_SET_SETTING;
+	tu8Tx[1] = u8Reg;
+	tu8Tx[2] = u8Val;
+
+	rc = SendReceive (num, tu8Tx, tu8Rx);
+	if (rc < 0)
+	{
+		return -1;
+	}
+	if (tu8Rx[0]!=ANS_SARK_OK)
+	{
+		return -2;
+	}
+	return 1;
+}
+
+/**
+  * @brief Read setting
+  *
+  * @param  num		device number (starting by zero)
+  * @param  u8Reg	{SETTING_SAMPLING, SETTING_FILTER, SETTING_RUN}
+  * @param  pu8Val	read value
+  * @retval None
+  *			@li 1: Ok
+  *			@li -1: comm error
+  *			@li -2: device answered error
+  */
+int Sark_GetSetting (int16 num, uint8 u8Reg, uint8 *pu8Val)
+{
+	uint8 tu8Rx[SARKCMD_RX_SIZE];
+	uint8 tu8Tx[SARKCMD_TX_SIZE];
+	int rc;
+
+	memset(tu8Tx, 0, SARKCMD_TX_SIZE);
+	tu8Tx[0] = CMD_GET_SETTING;
+	tu8Tx[1] = u8Reg;
+
+	rc = SendReceive (num, tu8Tx, tu8Rx);
+	if (rc < 0)
+	{
+		return -1;
+	}
+	if (tu8Rx[0]!=ANS_SARK_OK)
+	{
+		return -2;
+	}
+	*pu8Val = tu8Rx[1];
+	return 1;
+}
+
+/**
   * @brief
   * @param  None
   * @retval None

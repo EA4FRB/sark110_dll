@@ -49,6 +49,8 @@
 #define CMD_BATT_STAT			7	/* Battery charger status */
 #define CMD_DISK_INFO			8	/* Get disk information */
 #define CMD_DISK_VOLUME			9	/* Get disk volume name */
+#define CMD_SET_SETTING			10	/* Sets device setting */
+#define CMD_GET_SETTING			11	/* Gets device setting */
 #define CMD_SARK_MEAS_RX_EFF	12	/* Measures R and X; efficient (x4 samples) */
 #define CMD_BUZZER				20	/* Sounds buzzer */
 #define CMD_GET_KEY				21	/* Get key */
@@ -62,6 +64,11 @@
 /* Position 5 in CMD_SARK_MEAS_RX */
 #define PAR_SARK_CAL			1	/* OSL calibrated val */
 #define PAR_SARK_UNCAL			2	/* Raw val */
+
+/* Commands CMD_SET_SETUP and CMD_GET_SETUP */
+#define SETTING_SAMPLING		0
+#define SETTING_FILTER			1
+#define SETTING_RUN             2
 
 /* GPIO Command */
 #define GPIO_MODE				0

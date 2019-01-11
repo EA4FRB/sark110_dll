@@ -75,6 +75,8 @@ extern int Sark_DiskVolume (int16 num, uint8 *pu8Volume);
 extern int Sark_Buzzer (int16 num, uint16 u16Freq, uint16 u16Duration);
 extern int Sark_Device_Reset (int16 num);
 extern int Sark_GPIO (int16 num, uint8 u8Cmd, uint8 u8Port, uint8 u8In, uint8 *pu8Out);
+extern int Sark_SetSetting (int16 num, uint8 u8Reg, uint8 u8Val);
+extern int Sark_GetSetting (int16 num, uint8 u8Reg, uint8 *pu8Val);
 
 #endif	 /* __SARK_REM_CLIENT_H__ */
 
