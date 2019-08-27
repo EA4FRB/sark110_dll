@@ -7,7 +7,7 @@ Complete source code of the Windows DLL client for the [SARK-110](www.sark110.co
 
 The client supports the following communication interfaces:
 - USB custom HID 
-- Bluetooth LE (future device)
+- Bluetooth LE (SARK-110-ULM)
 - Network connection with a server; see [sark110-srv-linux](https://github.com/EA4FRB/sark110-srv-linux)
 
 Pre-requisites

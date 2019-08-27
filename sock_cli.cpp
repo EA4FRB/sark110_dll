@@ -3,7 +3,7 @@
   * @file    sock_cli.cpp
   * @author  Melchor Varela - EA4FRB
   * @version V1.0
-  * @date    13-March-2018
+  * @date    27-Aug-2019
   * @brief   SARK110 DLL - TCP Client sockets
   ******************************************************************************
   * @copy
@@ -24,7 +24,7 @@
   *  along with "SARK110 Antenna Vector Impedance Analyzer" software.  If not,
   *  see <http://www.gnu.org/licenses/>.
   *
-  * <h2><center>&copy; COPYRIGHT 2011-2018 Melchor Varela - EA4FRB </center></h2>
+  * <h2><center>&copy; COPYRIGHT 2011-2019 Melchor Varela - EA4FRB </center></h2>
   *  Melchor Varela, Madrid, Spain.
   *  melchor.varela@gmail.com
   */
@@ -199,6 +199,6 @@ static void CALLBACK TimerProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired)
   * @}
   */
 
-/************* (C) COPYRIGHT 2011-2018 Melchor Varela - EA4FRB *****END OF FILE****/
+/************* (C) COPYRIGHT 2011-2019 Melchor Varela - EA4FRB *****END OF FILE****/
 
 

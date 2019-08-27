@@ -4,7 +4,7 @@
   * @file    ble_windows.cpp
   * @author  Melchor Varela - EA4FRB
   * @version V1.0
-  * @date    13-March-2018
+  * @date    27-Aug-2019
   * @brief   SARK110 DLL - BLE Functions
   *          Ensure that you have paired the SARK-110 with the computer!
   ******************************************************************************
@@ -26,7 +26,7 @@
   *  along with "SARK110 Antenna Vector Impedance Analyzer" software.  If not,
   *  see <http://www.gnu.org/licenses/>.
   *
-  * <h2><center>&copy; COPYRIGHT 2011-2018 Melchor Varela - EA4FRB </center></h2>
+  * <h2><center>&copy; COPYRIGHT 2011-2019 Melchor Varela - EA4FRB </center></h2>
   *  Melchor Varela, Madrid, Spain.
   *  melchor.varela@gmail.com
   */
@@ -50,6 +50,7 @@
 
 #define TO_SEARCH_DEVICE_UUID "{49535343-fe7d-4ae5-8fa9-9fafd205e455}"
 #define RECV_BUFF_SIZE	100
+#define SEND_BUFF_SIZE	100
 
 static HANDLE GetBLEHandle(__in GUID AGuid);
 static void CALLBACK RecvHandler( BTH_LE_GATT_EVENT_TYPE EventType, PVOID EventOutParameter, PVOID Context);
@@ -57,7 +58,7 @@ static void CALLBACK RecvHandler( BTH_LE_GATT_EVENT_TYPE EventType, PVOID EventO
 static HANDLE ghLEDevice = NULL;
 static PBTH_LE_GATT_CHARACTERISTIC gGattChar;
 static char gtRcvBuff[RECV_BUFF_SIZE];
-static bool gIsRcvData = FALSE;
+static volatile bool gIsRcvData = FALSE;
 
 int ble_open (void)
 {
@@ -407,7 +408,7 @@ int ble_open (void)
 		ghLEDevice = hLEDevice;
 		gGattChar = &pCharBuffer[0];
 		gIsRcvData = FALSE;
-		Sleep(1000);
+		Sleep(200);
 	}
 	else
 	{
@@ -434,31 +435,53 @@ int ble_close (void)
 int ble_send(void *buf, int len)
 {
 	HRESULT hr;
+	char gatt_val_array[sizeof(PBTH_LE_GATT_CHARACTERISTIC_VALUE)+SEND_BUFF_SIZE];
+	int rc = 1;
 
 	if (ghLEDevice == NULL)
 		return -1;
+	if (len > SEND_BUFF_SIZE)
+		return -2;
 
+	memset(gtRcvBuff, 0, sizeof(gtRcvBuff));
 	gIsRcvData = FALSE;
 
 	size_t required_size = sizeof(BTH_LE_GATT_CHARACTERISTIC_VALUE) + len;
-	PBTH_LE_GATT_CHARACTERISTIC_VALUE gatt_value = (PBTH_LE_GATT_CHARACTERISTIC_VALUE)malloc(required_size);
-	if (gatt_value == NULL)
-		return -2;
+	PBTH_LE_GATT_CHARACTERISTIC_VALUE gatt_value = (PBTH_LE_GATT_CHARACTERISTIC_VALUE)gatt_val_array;
     ZeroMemory(gatt_value, required_size);
     gatt_value->DataSize = (ULONG)len;
     memcpy(gatt_value->Data, buf, len);
-	hr = BluetoothGATTSetCharacteristicValue(ghLEDevice,
-										gGattChar,
-										gatt_value,
-										NULL,
+
+	BTH_LE_GATT_RELIABLE_WRITE_CONTEXT ReliableWriteContext = NULL;
+	hr = BluetoothGATTBeginReliableWrite(ghLEDevice, 
+										&ReliableWriteContext,
 										BLUETOOTH_GATT_FLAG_NONE);
-	free(gatt_value);
-	if (S_OK != hr) {
-		printf("BluetoothGATTSetCharacteristicValue - Actual Data %d", hr);
-		return -2;
+
+	if (SUCCEEDED(hr)) 
+	{
+		hr = BluetoothGATTSetCharacteristicValue(ghLEDevice,
+											gGattChar,
+											gatt_value,
+											NULL,
+											BLUETOOTH_GATT_FLAG_NONE);
+		if (S_OK != hr) {
+			printf("BluetoothGATTSetCharacteristicValue - Actual Data %d", hr);
+			rc = -4;
+		}
+	}
+	else
+	{
+		rc = -3;
 	}
 
-	return 1;
+	if (NULL != ReliableWriteContext) 
+	{
+		BluetoothGATTEndReliableWrite(ghLEDevice, 
+									 ReliableWriteContext,
+									  BLUETOOTH_GATT_FLAG_NONE);
+	}
+
+	return rc;
 }
 
 int ble_recv(void *buf, int len)
@@ -549,6 +572,6 @@ static void CALLBACK RecvHandler( BTH_LE_GATT_EVENT_TYPE EventType, PVOID EventO
   * @}
   */
 
-/************* (C) COPYRIGHT 2011-2018 Melchor Varela - EA4FRB *****END OF FILE****/
+/************* (C) COPYRIGHT 2011-2019 Melchor Varela - EA4FRB *****END OF FILE****/
 
 #endif

@@ -3,7 +3,7 @@
   * @file    ble_windows.cpp
   * @author  Melchor Varela - EA4FRB
   * @version V1.0
-  * @date    13-March-2018
+  * @date    27-Aug-2019
   * @brief   SARK110 DLL - BLE Functions
   *          Ensure that you have paired the SARK-110 with the computer!
   ******************************************************************************
@@ -25,7 +25,7 @@
   *  along with "SARK110 Antenna Vector Impedance Analyzer" software.  If not,
   *  see <http://www.gnu.org/licenses/>.
   *
-  * <h2><center>&copy; COPYRIGHT 2011-2018 Melchor Varela - EA4FRB </center></h2>
+  * <h2><center>&copy; COPYRIGHT 2011-2019 Melchor Varela - EA4FRB </center></h2>
   *  Melchor Varela, Madrid, Spain.
   *  melchor.varela@gmail.com
   */
@@ -49,4 +49,4 @@ int ble_close(void);
   * @}
   */
 
-/************* (C) COPYRIGHT 2011-2018 Melchor Varela - EA4FRB *****END OF FILE****/
+/************* (C) COPYRIGHT 2011-2019 Melchor Varela - EA4FRB *****END OF FILE****/

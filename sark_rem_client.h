@@ -3,7 +3,7 @@
   * @file    sark_rem_client.h
   * @author  Melchor Varela - EA4FRB
   * @version V1.0
-  * @date    13-March-2018
+  * @date    27-Aug-2019
   * @brief	 SARK110 Client interface
   ******************************************************************************
   * @copy
@@ -24,7 +24,7 @@
   *  along with "SARK110 Antenna Vector Impedance Analyzer" firmware.  If not,
   *  see <http://www.gnu.org/licenses/>.
   *
-  * <h2><center>&copy; COPYRIGHT 2011-2018 Melchor Varela - EA4FRB </center></h2>
+  * <h2><center>&copy; COPYRIGHT 2011-2019 Melchor Varela - EA4FRB </center></h2>
   *  Melchor Varela, Madrid, Spain.
   *  melchor.varela@gmail.com
   */
@@ -84,5 +84,5 @@ extern int Sark_GetSetting (int16 num, uint8 u8Reg, uint8 *pu8Val);
   * @}
   */
 
-/************* (C) COPYRIGHT 2011-2018 Melchor Varela - EA4FRB *****END OF FILE****/
+/************* (C) COPYRIGHT 2011-2019 Melchor Varela - EA4FRB *****END OF FILE****/
 

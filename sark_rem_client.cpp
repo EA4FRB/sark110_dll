@@ -3,7 +3,7 @@
   * @file    sark_rem_client.c
   * @author  Melchor Varela - EA4FRB
   * @version V1.0
-  * @date    13-March-2018
+  * @date    27-Aug-2019
   * @brief   SARK110 DLL - Commands processing
   ******************************************************************************
   * @copy
@@ -24,7 +24,7 @@
   *  along with "SARK110 Antenna Vector Impedance Analyzer" software.  If not,
   *  see <http://www.gnu.org/licenses/>.
   *
-  * <h2><center>&copy; COPYRIGHT 2011-2018 Melchor Varela - EA4FRB </center></h2>
+  * <h2><center>&copy; COPYRIGHT 2011-2019 Melchor Varela - EA4FRB </center></h2>
   *  Melchor Varela, Madrid, Spain.
   *  melchor.varela@gmail.com
   */
@@ -46,6 +46,8 @@
 /* Private define ------------------------------------------------------------*/
 #define HID_TX_TIMEOUT		100
 #define HID_RX_TIMEOUT		220
+
+#define printf 
 
 /* Private macro -------------------------------------------------------------*/
 
@@ -654,6 +656,10 @@ int Sark_Buzzer (int16 num, uint16 u16Freq, uint16 u16Duration)
 	{
 		return -2;
 	}
+	if (u16Duration == 0)
+		Sleep(200);
+	else
+        Sleep(u16Duration);
 	return 1;
 }
 
@@ -864,8 +870,6 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 	else if (gi16Itfz == ITFZ_BT)
 	{
 #ifndef _NO_BLE_SUPPORT_
-
-		int retryCmd;
 		int retryGbl;
 		int numRetry;
 
@@ -877,23 +881,20 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 		EnterCriticalSection(&txrx_mutex);
 		for (retryGbl = 0; retryGbl < numRetry; retryGbl++)
 		{
-			for (retryCmd=0; retryCmd < 2; retryCmd++)
+			rc = ble_send(tx, SARKCMD_TX_SIZE);
+			if (rc >= 0)
 			{
-				rc = ble_send(tx, SARKCMD_TX_SIZE);
-				if (rc < 0)
-					break;
 				rc = ble_recv(rx, SARKCMD_RX_SIZE);
-				if (rc < 0)
-					break;
-				if (rx[0]==ANS_SARK_OK || rx[0]==ANS_SARK_ERR)
-					break;
-				else
-					rc = -1;
+				if (rc >= 0)
+				{
+					if (rx[0]==ANS_SARK_OK /*|| rx[0]==ANS_SARK_ERR*/)
+						break;
+					else
+						rc = -10;
+				}
 			}
-			if (rc > 0)
-				break;
-			ble_close();
-			Sleep(50);
+
+			Sleep(200);
 			ble_open();
 		}
 		LeaveCriticalSection(&txrx_mutex);
@@ -910,7 +911,7 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 			rc = rawhid_recv(num, rx, SARKCMD_RX_SIZE, HID_RX_TIMEOUT);
 			if (rc < 0)
 				break;
-			if (rx[0]==ANS_SARK_OK || rx[0]==ANS_SARK_ERR)
+			if (rx[0]==ANS_SARK_OK /*|| rx[0]==ANS_SARK_ERR*/)
 				break;
 			else
 				rc = -1;
@@ -998,4 +999,4 @@ static float Half2Float(uint16 value)
   * @}
   */
 
-/************* (C) COPYRIGHT 2011-2018 Melchor Varela - EA4FRB *****END OF FILE****/
+/************* (C) COPYRIGHT 2011-2019 Melchor Varela - EA4FRB *****END OF FILE****/
