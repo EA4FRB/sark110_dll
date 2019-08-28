@@ -881,6 +881,11 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 		EnterCriticalSection(&txrx_mutex);
 		for (retryGbl = 0; retryGbl < numRetry; retryGbl++)
 		{
+			if (retryGbl != 0)
+			{
+				Sleep(100);
+				ble_open();
+			}
 			rc = ble_send(tx, SARKCMD_TX_SIZE);
 			if (rc >= 0)
 			{
@@ -893,9 +898,6 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 						rc = -10;
 				}
 			}
-
-			Sleep(200);
-			ble_open();
 		}
 		LeaveCriticalSection(&txrx_mutex);
 #endif

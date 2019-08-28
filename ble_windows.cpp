@@ -59,6 +59,7 @@ static HANDLE ghLEDevice = NULL;
 static PBTH_LE_GATT_CHARACTERISTIC gGattChar;
 static char gtRcvBuff[RECV_BUFF_SIZE];
 static volatile bool gIsRcvData = FALSE;
+static BLUETOOTH_GATT_EVENT_HANDLE gEventHandle = NULL;
 
 int ble_open (void)
 {
@@ -333,8 +334,11 @@ int ble_open (void)
 
 				if (S_OK != hr) {
 					printf("BluetoothGATTRegisterEvent - Actual Data %d", hr);
+					gEventHandle = NULL;
 					break;
 				}
+				else
+					gEventHandle = EventHandle;			
 			}
 
 			if (currGattChar->IsReadable) {//currGattChar->IsReadable
@@ -408,7 +412,7 @@ int ble_open (void)
 		ghLEDevice = hLEDevice;
 		gGattChar = &pCharBuffer[0];
 		gIsRcvData = FALSE;
-		Sleep(200);
+		Sleep(100);
 	}
 	else
 	{
@@ -423,6 +427,14 @@ int ble_close (void)
 	if (ghLEDevice == NULL)
 		return -1;
 
+	if (gEventHandle != NULL)
+	{
+		HRESULT hr = BluetoothGATTUnregisterEvent(
+			gEventHandle,
+			BLUETOOTH_GATT_FLAG_NONE
+		);
+		gEventHandle = NULL;
+	}
 	CloseHandle(ghLEDevice);
 	ghLEDevice = NULL;
 
