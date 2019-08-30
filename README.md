@@ -1,5 +1,5 @@
 # sark110_dll
-Windows DLL client for the SARK-110 Antenna Analyzer
+Windows DLL client for the SARK-110 Antenna Analyzer series
 
 About
 -----
@@ -25,6 +25,9 @@ API
   * @brief Connects to the SARK-110 device
   *
   * @param  itfz        interface with the sark
+  *						0: USB HID
+  * 					1: Bluetooth LE
+  *						2: Network
   * @param  maxDev	maximum number of devices to detect (HID only)
   * @param  serverAddr	server address (sockets only)
   * @retval
