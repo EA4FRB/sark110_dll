@@ -895,7 +895,7 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 				rc = ble_recv(rx, SARKCMD_RX_SIZE);
 				if (rc >= 0)
 				{
-					if (rx[0]==ANS_SARK_OK /*|| rx[0]==ANS_SARK_ERR*/)
+					if (rx[0]==ANS_SARK_OK || rx[0]==ANS_SARK_ERR)
 						break;
 					else
 						rc = -10;
@@ -916,7 +916,7 @@ static int SendReceive (int16 num, uint8 *tx, uint8 *rx)
 			rc = rawhid_recv(num, rx, SARKCMD_RX_SIZE, HID_RX_TIMEOUT);
 			if (rc < 0)
 				break;
-			if (rx[0]==ANS_SARK_OK /*|| rx[0]==ANS_SARK_ERR*/)
+			if (rx[0]==ANS_SARK_OK || rx[0]==ANS_SARK_ERR)
 				break;
 			else
 				rc = -1;
