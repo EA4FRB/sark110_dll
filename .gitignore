@@ -6,6 +6,14 @@
 *.ko
 *.obj
 *.elf
+*.tlog
+*.log
+*.manifest
+*.cache
+*.lastbuildstate
+*.pdb
+*.manifest.res
+*manifest.rc
 
 # Linker output
 *.ilk
@@ -15,6 +23,10 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
+*.sdf
+*.suo
+*.opensdf
 
 # Libraries
 *.lib
@@ -41,6 +53,7 @@
 *.su
 *.idb
 *.pdb
+
 
 # Kernel Module Compile Results
 *.mod*
